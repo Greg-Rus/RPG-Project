@@ -13,13 +13,14 @@ public class Interactable : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
+        if (InteractionTransform == null) InteractionTransform = transform;
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(InteractionTransform.position, Radius);
     }
 
     void Update()
     {
-        if (_isFocused && _hasInteracted)
+        if (_isFocused && !_hasInteracted)
         {
             var distance = Vector3.Distance(InteractionTransform.position, _player.position);
             if (distance <= Radius)
@@ -46,6 +47,6 @@ public class Interactable : MonoBehaviour
 
     public virtual void Interact()
     {
-
+        Debug.Log("Interacted with " + gameObject.name);
     }
 }
