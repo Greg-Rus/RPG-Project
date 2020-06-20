@@ -7,6 +7,13 @@ public class Inventory : MonoBehaviour
 {
     #region Singleton
     public static Inventory Instance;
+
+    public List<Item> Items
+    {
+        get { return _items; }
+        set { _items = value; }
+    }
+
     void Awake()
     {
         if (Instance != null) throw new ArgumentException("Inventory already exists");
@@ -25,20 +32,20 @@ public class Inventory : MonoBehaviour
     {
         if (item.IsDefaultItem) return false;
 
-        if (_items.Count >= InventorySpace)
+        if (Items.Count >= InventorySpace)
         {
             Debug.Log("Not enough room in inventory");
             return false;
         }
 
-        _items.Add(item);
+        Items.Add(item);
         OnItemChangedCallback?.Invoke();
         return true;
     }
 
     public void Remove(Item item)
     {
-        _items.Remove(item);
+        Items.Remove(item);
         OnItemChangedCallback?.Invoke();
     }
 }
